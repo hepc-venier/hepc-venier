@@ -2,10 +2,108 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>HEP C - Venier Project</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Contact | HEP C - Venier Project</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      background-color: #fffaf5;
+    }
+
+    header {
+      background-color: #ff9f43;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #fff;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    main {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    h2 {
+      color: #4a2e00;
+    }
+
+    .contact-card {
+      background-color: #fff;
+      max-width: 500px;
+      margin: 2rem auto;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+
+    .contact-card p {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-card a {
+      color: #ff9f43;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    form {
+      max-width: 500px;
+      margin: 2rem auto;
+      text-align: left;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    form button {
+      background-color: #ff9f43;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    footer {
+      background-color: #ffcc99;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+  </style>
 </head>
 <body>
+
 <header>
   <h1>HEP C - Venier Project</h1>
   <nav>
@@ -22,15 +120,30 @@
 
 <main>
 
-<h2>Contact Us</h2>
-<div class="contact-card">
-  <p><strong>Email:</strong> <a href="mailto:hepc-venier@protonmail.com">hepc-venier@protonmail.com</a></p>
-  <p><strong>Phone:</strong> +1 (800) 555-HEPC</p>
-  <p><strong>Location:</strong> Toronto, Ontario</p>
-</div>
-<p>Interested in collaborating or volunteering? Fill out our referral form or get in touch today!</p>
+  <h2>Contact Us</h2>
+  <div class="contact-card">
+    <p><strong>Email:</strong> <a href="mailto:elisavenier@rogers.com">elisavenier@rogers.com</a></p>
+    <p><strong>Phone:</strong> +1 (800) 555-HEPC</p>
+    <p><strong>Location:</strong> Toronto, Ontario</p>
+  </div>
+
+  <form action="mailto:elisavenier@rogers.com" method="POST" enctype="text/plain">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Your Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" rows="5" required></textarea>
+
+    <button type="submit">Send Message</button>
+  </form>
+
+  <p>Interested in collaborating or volunteering? Get in touch today or fill out our referral form!</p>
 
 </main>
+
 <footer>
   <p>&copy; 2025 HEP C - Venier Project. All rights reserved.</p>
 </footer>
