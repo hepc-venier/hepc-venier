@@ -1,11 +1,100 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>HEP C - Venier Project</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Resources | HEP C - Venier Project</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      background-color: #fffaf5;
+    }
+
+    header {
+      background-color: #ff9f43;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #fff;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    main {
+      padding: 2rem;
+    }
+
+    h2 {
+      text-align: center;
+      color: #4a2e00;
+    }
+
+    .resource-list {
+      max-width: 700px;
+      margin: 2rem auto;
+      background-color: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .resource-list ul {
+      padding-left: 1.2rem;
+    }
+
+    .info-bits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 3rem 0;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .bit {
+      background-color: #fff8ec;
+      padding: 1.5rem;
+      border-left: 6px solid #ff9f43;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .bit h3 {
+      margin-top: 0;
+      color: #ff9f43;
+    }
+
+    footer {
+      background-color: #ffcc99;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+  </style>
 </head>
 <body>
+
 <header>
   <h1>HEP C - Venier Project</h1>
   <nav>
@@ -21,10 +110,42 @@
 </header>
 
 <main>
-<h2>Resources</h2>
-<p>Download educational materials, research reports, and guides for patients and providers.</p>
-<ul><li><a href="#">Educational Brochure (PDF)</a></li><li><a href="#">Research Summary 2025 (PDF)</a></li></ul>
+  <h2>Educational Resources</h2>
+  <div class="resource-list">
+    <p>Download educational materials, research reports, and guides for patients and providers:</p>
+    <ul>
+      <li><a href="#">Educational Brochure (PDF)</a></li>
+      <li><a href="#">Research Summary 2025 (PDF)</a></li>
+      <li><a href="#">Treatment Journey Guide (PDF)</a></li>
+      <li><a href="#">Provider Toolkit (PDF)</a></li>
+    </ul>
+  </div>
+
+  <h2 style="text-align:center; color:#4a2e00;">Hep C Facts & Figures</h2>
+  <div class="info-bits">
+    <div class="bit">
+      <h3> One-Time Exposure</h3>
+      <p>Hepatitis C is transmitted through blood-to-blood contact. One exposure can lead to lifelong infection if untreated.</p>
+    </div>
+    <div class="bit">
+      <h3> Most Don't Know</h3>
+      <p>Up to 44% of people living with Hep C are unaware they have it. Early detection is key to stopping its spread.</p>
+    </div>
+    <div class="bit">
+      <h3> Simple Cure</h3>
+      <p>Modern treatments are over 95% effective and involve taking oral medication for 8 to 12 weeks — no injections needed.</p>
+    </div>
+    <div class="bit">
+      <h3> Disproportionate Impact</h3>
+      <p>Indigenous people, 2SLGBTQ+ individuals, people who use drugs, and people in prison are at higher risk.</p>
+    </div>
+    <div class="bit">
+      <h3> Rapid Tests</h3>
+      <p>We use point-of-care tests that give accurate results in under 20 minutes — even in remote or rural communities.</p>
+    </div>
+  </div>
 </main>
+
 <footer>
   <p>&copy; 2025 HEP C - Venier Project. All rights reserved.</p>
 </footer>
