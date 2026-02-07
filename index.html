@@ -2,168 +2,659 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>HEP C - Venier Project</title>
+  <title>HEP C - Venier Project | Hepatitis C Care in Ontario</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bridging gaps in Hepatitis C screening and treatment for underserved communities across Ontario.">
 
-  <!-- Roboto Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <link rel="stylesheet" href="assets/css/style.css">
   <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #fffaf5;
+    :root {
+      --primary: #d35400;
+      --primary-light: #e67e22;
+      --secondary: #1a1a2e;
+      --accent: #16a085;
+      --cream: #faf8f5;
+      --white: #ffffff;
+      --gray-100: #f5f5f5;
+      --gray-300: #d1d1d1;
+      --gray-500: #888;
+      --gray-700: #444;
+      --gray-900: #1a1a1a;
+      --transition: all 0.2s ease;
     }
 
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      background-color: var(--cream);
+      color: var(--gray-900);
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    h1, h2, h3 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-weight: 400;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Header */
     header {
-      background-color: #ff9f43;
-      padding: 1rem 2rem;
+      background-color: var(--cream);
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--gray-300);
+    }
+
+    header .container {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .logo img {
-      height: 50px;
+    .logo img { height: 220px; }
+
+    nav { display: flex; gap: 0.25rem; align-items: center; }
+
+    nav a {
+      text-decoration: none;
+      color: var(--gray-700);
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
+      transition: var(--transition);
     }
 
-    nav {
+    nav a:hover { color: var(--primary); }
+
+    nav a.nav-cta {
+      background-color: var(--secondary);
+      color: var(--white);
+      border-radius: 4px;
+      margin-left: 0.5rem;
+    }
+
+    nav a.nav-cta:hover { background-color: var(--gray-700); }
+
+    /* Hero */
+    .hero {
+      padding: 6rem 0;
+      background: var(--secondary);
+      color: var(--white);
+    }
+
+    .hero-content {
+      max-width: 750px;
+    }
+
+    .hero-label {
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      color: var(--primary-light);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid var(--primary);
+      transition: var(--transition);
+    }
+
+    .hero-links a:hover { border-color: var(--white); }
+
+    /* Stats Bar */
+    .stats-bar {
+      background: var(--white);
+      border-bottom: none;
+      padding: 3rem 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-item { padding: 0 1rem; }
+
+    .stat-item:not(:last-child) {
+      border-right: 1px solid var(--gray-300);
+    }
+
+    .stat-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.75rem;
+      color: var(--primary);
+      display: block;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--gray-500);
+      margin-top: 0.5rem;
+    }
+
+    /* Sections */
+    .section {
+      padding: 5rem 0;
+    }
+
+    .section-header {
+      margin-bottom: 3rem;
+    }
+
+    .section-label {
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      color: var (--gray-500);
+      font-size: 1.1rem;
+      max-width: 550px;
+    }
+
+    .section-alt { background: var(--white); }
+
+    /* Content Grid - No Cards */
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+
+    .content-item {
+      padding-top: 1.5rem;
+      border-top: 2px solid var(--secondary);
+    }
+
+    .content-item h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .content-item p {
+      color: var(--gray-700);
+      line-height: 1.8;
+    }
+
+    /* Facts - Simple List Style */
+    .facts-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+    }
+
+    .fact-item {
+      padding: 2rem;
+      border-bottom: 1px solid var (--gray-300);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .fact-item:nth-child(odd) {
+      border-right: 1px solid var(--gray-300);
+    }
+
+    .fact-icon {
+      width: 40px;
+      height: 40px;
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 1rem;
+    }
+
+    .fact-content h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: var(--gray-900);
+    }
+
+    .fact-content p {
+      color: var(--gray-700);
+      font-size: 0.95rem;
+    }
+
+    /* Steps - Horizontal */
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid var(--gray-300);
+    }
+
+    .step {
+      padding: 2.5rem 2rem;
+      border-right: 1px solid var(--gray-300);
+      position: relative;
+    }
+
+    .step:last-child { border-right: none; }
+
+    .step-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 3rem;
+      color: var(--gray-300);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .step h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+    }
+
+    .step p {
+      color: var(--gray-500);
+      font-size: 0.9rem;
+    }
+
+    /* CTA Banner */
+    .cta-banner {
+      background: var(--primary);
+      padding: 4rem 0;
+    }
+
+    .cta-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .cta-text h2 {
+      color: var(--white);
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-text p {
+      color: rgba(255,255,255,0.85);
+    }
+
+    .cta-buttons {
       display: flex;
       gap: 1rem;
     }
 
-    nav a {
+    .btn {
+      padding: 1rem 2rem;
       text-decoration: none;
-      color: #fff;
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .hero {
-      background: url('images/istockphoto-1496167879-612x612.jpg') center/cover no-repeat;
-      color: white;
-      padding: 10rem 4rem;
-      text-align: center;
-      position: relative;
+    .btn-dark {
+      background: var(--secondary);
+      color: var(--white);
     }
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
+    .btn-dark:hover { background: var(--gray-900); }
+
+    .btn-outline-light {
+      border: 2px solid var(--white);
+      color: var(--white);
+      background: transparent;
     }
 
-    .hero h1,
-    .hero p {
-      position: relative;
-      z-index: 2;
+    .btn-outline-light:hover {
+      background: var(--white);
+      color: var(--primary);
     }
 
-    .hero h1 {
-      font-size: 3.2rem;
-      margin: 0;
-    }
-
-    .hero p {
-      font-size: 1.6rem;
-    }
-
-    .cards {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      padding: 2rem;
-    }
-
-    .card {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      margin: 1rem;
-      padding: 1.5rem;
-      flex: 1 1 300px;
-      max-width: 400px;
-    }
-
-    .facts {
-      background-color: #fff2e6;
-      padding: 3rem 2rem;
-    }
-
-    .facts h2 {
-      text-align: center;
-      color: #4a2e00;
-      margin-bottom: 2rem;
-    }
-
+    /* Footer */
     footer {
-      background-color: #ffcc99;
+      background: var(--secondary);
+      color: var(--white);
+      padding: 4rem 0 2rem;
+      margin-top: 0;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .footer-about p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+    }
+
+    .footer-col h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 1.5rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .footer-col ul { list-style: none; }
+
+    .footer-col li { margin-bottom: 0.75rem; }
+
+    .footer-col a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .footer-col a:hover { color: var(--primary-light); }
+
+    .footer-bottom {
+      padding-top: 2rem;
       text-align: center;
-      padding: 1rem;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .content-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-item:nth-child(2) { border-right: none; }
+      .facts-list { grid-template-columns: 1fr; }
+      .fact-item { border-right: none !important; }
+      .steps-row { grid-template-columns: 1fr; }
+      .step { border-right: none; border-bottom: 1px solid var(--gray-300); }
+      .step:last-child { border-bottom: none; }
+      .cta-content { flex-direction: column; text-align: center; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      nav { display: none; }
+      .hero h1 { font-size: 2.5rem; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .stat-item { border-right: none !important; border-bottom: 1px solid var(--gray-300); padding-bottom: 1.5rem; }
+      .stat-item:last-child { border-bottom: none; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">
-    <img src="assets/imgs/logo-light.png" alt="HEP C Logo">
+  <div class="container">
+    <div class="logo">
+      <img src="assets/imgs/test.png" alt="HCV Free - The Venier Project">
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="impact.html">Impact</a>
+      <a href="resources.html">Resources</a>
+      <a href="partners.html">Partners</a>
+      <a href="contact.html" class="nav-cta">Contact</a>
+    </nav>
   </div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="services.html">Services</a>
-    <a href="partners.html">Partners</a>
-    <a href="contact.html">Contact</a>
-  </nav>
 </header>
 
 <section class="hero">
-  <h1>Bridging Gaps in Hepatitis C Care</h1>
-  <p>Targeting underserved communities across Ontario</p>
-</section>
-
-<section class="cards">
-  <div class="card">
-    <h2>Our Mission</h2>
-    <p>We aim to bridge the gap between screening and treatment for Hepatitis C, focusing on marginalized populations including Indigenous peoples, rural communities, and LGBTQ+ individuals.</p>
-  </div>
-  <div class="card">
-    <h2>What We Offer</h2>
-    <p>We provide point-of-care testing, pharmacist-led treatment pathways, educational materials, and downloadable resources to increase accessibility.</p>
-  </div>
-  <div class="card">
-    <h2>Join the Movement</h2>
-    <p>We welcome collaboration from clinics, pharmacies, researchers, and community organizations. Help us eliminate Hep C in Ontario!</p>
+  <div class="container">
+    <div class="hero-content">
+      <p class="hero-label">Hepatitis C Initiative</p>
+      <h1>Bridging Gaps in Hepatitis C Care</h1>
+      <p>Empowering underserved communities across Ontario with accessible screening, treatment, and education for a Hep C-free future.</p>
+      <div class="hero-links">
+        <a href="services.html">Find Testing <i class="fas fa-arrow-right"></i></a>
+        <a href="about.html">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="facts">
-  <h2>Understanding Hep C</h2>
-  <div class="cards">
-    <div class="card">
-      <h3> Did you know?</h3>
-      <p>More than 250,000 people are living with Hepatitis C in Canada—many don’t even know it.</p>
+<section class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-number">250K+</span>
+        <span class="stat-label">Canadians Living with Hep C</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">44%</span>
+        <span class="stat-label">Unaware of Infection</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">95%+</span>
+        <span class="stat-label">Cure Rate</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">8–12</span>
+        <span class="stat-label">Weeks of Treatment</span>
+      </div>
     </div>
-    <div class="card">
-      <h3> Easy Testing</h3>
-      <p>Rapid point-of-care tests can detect Hep C antibodies in under 20 minutes with a finger prick.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">What We Do</p>
+      <h2>Our comprehensive approach to Hepatitis C care</h2>
+      <p>From awareness to cure, we address the full spectrum of HCV prevention and treatment.</p>
     </div>
-    <div class="card">
-      <h3> Easy Cure</h3>
-      <p>Treatment is now over 95% effective, taken as pills for just 8 to 12 weeks — no injections required!</p>
+    <div class="content-grid">
+      <div class="content-item">
+        <h3>Our Mission</h3>
+        <p>We bridge the gap between screening and treatment for Hepatitis C, focusing on marginalized populations including Indigenous peoples, rural communities, people who use drugs, and 2SLGBTQ+ individuals across Ontario.</p>
+      </div>
+      <div class="content-item">
+        <h3>Our Services</h3>
+        <p>Point-of-care rapid testing, pharmacist-led treatment pathways, culturally sensitive education, harm reduction supplies, and care coordination to maximize accessibility for all communities.</p>
+      </div>
+      <div class="content-item">
+        <h3>Join Us</h3>
+        <p>We welcome collaboration from healthcare clinics, pharmacies, researchers, Indigenous health centers, and community organizations. Together, we can eliminate Hepatitis C in Ontario.</p>
+      </div>
     </div>
-    <div class="card">
-      <h3> At-Risk Communities</h3>
-      <p>Hep C disproportionately affects people who use drugs, Indigenous communities, and 2SLGBTQ+ individuals.</p>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Understanding Hep C</p>
+      <h2>Essential facts everyone should know</h2>
+    </div>
+    <div class="facts-list">
+      <div class="fact-item">
+        <div class="fact-icon"><i class="fas fa-virus"></i></div>
+        <div class="fact-content">
+          <h4>What is Hepatitis C?</h4>
+          <p>A viral infection attacking the liver, ranging from mild illness to serious, lifelong disease leading to cirrhosis and cancer if untreated.</p>
+        </div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-icon"><i class="fas fa-eye-slash"></i></div>
+        <div class="fact-content">
+          <h4>The Silent Epidemic</h4>
+          <p>More than 250,000 Canadians live with Hep C—nearly half don't know it. The virus can remain symptomless for decades.</p>
+        </div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-icon"><i class="fas fa-vial"></i></div>
+        <div class="fact-content">
+          <h4>Quick Testing</h4>
+          <p>Rapid point-of-care tests detect Hep C antibodies in under 20 minutes with just a finger prick.</p>
+        </div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-icon"><i class="fas fa-check-circle"></i></div>
+        <div class="fact-content">
+          <h4>Highly Curable</h4>
+          <p>Modern DAA treatments cure over 95% of cases. Simple pills for 8–12 weeks—no injections, minimal side effects.</p>
+        </div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-icon"><i class="fas fa-users"></i></div>
+        <div class="fact-content">
+          <h4>At-Risk Communities</h4>
+          <p>Disproportionately affects people who inject drugs, Indigenous communities, incarcerated individuals, and baby boomers.</p>
+        </div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-icon"><i class="fas fa-syringe"></i></div>
+        <div class="fact-content">
+          <h4>Transmission</h4>
+          <p>Spreads through blood contact: sharing needles, unsterile tattoos/piercings, needlestick injuries, rarely sexual contact.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">The Process</p>
+      <h2>Your pathway from testing to cure</h2>
+    </div>
+    <div class="steps-row">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4>Get Tested</h4>
+        <p>Quick, confidential finger-prick antibody test. Results in 20 minutes.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4>Confirm Diagnosis</h4>
+        <p>If positive, a blood draw confirms active infection and assesses liver health.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4>Start Treatment</h4>
+        <p>Pharmacist-led model prescribes and dispenses treatment directly.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4>Achieve Cure</h4>
+        <p>Complete 8–12 week course, confirm cure with follow-up test.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <div class="container">
+    <div class="cta-content">
+      <div class="cta-text">
+        <h2>Ready to Take Action?</h2>
+        <p>Whether you need testing or want to partner with us—we're here to help.</p>
+      </div>
+      <div class="cta-buttons">
+        <a href="contact.html" class="btn btn-dark">Get in Touch</a>
+        <a href="services.html" class="btn btn-outline-light">Find a Location</a>
+      </div>
     </div>
   </div>
 </section>
 
 <footer>
-  &copy; 2025 HEP C - Venier Project. All rights reserved.
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <img src="assets/imgs/test.png" alt="HCV Free - The Venier Project" style="height: 140px;">
+        <p>Dedicated to eliminating Hepatitis C in Ontario through accessible testing, treatment, and education for underserved communities.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="partners.html">Partners</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="resources.html">All Resources</a></li>
+          <li><a href="#">Testing Locations</a></li>
+          <li><a href="#">For Providers</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:elisavenier@rogers.com">elisavenier@rogers.com</a></li>
+          <li><a href="tel:+16476716076">(647) 671-6076</a></li>
+          <li>Ontario, Canada</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 HEP C Venier Project. All rights reserved.</p>
+    </div>
+  </div>
 </footer>
 
 </body>

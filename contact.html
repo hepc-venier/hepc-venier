@@ -2,150 +2,392 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Contact | HEP C - Venier Project</title>
+  <title>Contact Us | HEP C - Venier Project</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      margin: 0;
-      background-color: #fffaf5;
+    :root {
+      --primary: #d35400;
+      --primary-light: #e67e22;
+      --secondary: #1a1a2e;
+      --cream: #faf8f5;
+      --white: #ffffff;
+      --gray-300: #d1d1d1;
+      --gray-500: #888;
+      --gray-700: #444;
+      --gray-900: #1a1a1a;
+      --transition: all 0.2s ease;
     }
 
-    header {
-      background-color: #ff9f43;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background-color: var(--cream); color: var(--gray-900); line-height: 1.7; font-size: 17px; }
+    h1, h2, h3 { font-family: 'DM Serif Display', serif; font-weight: 400; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+
+    header { background-color: var(--cream); padding: 1.25rem 0; border-bottom: 1px solid var(--gray-300); }
+    header .container { display: flex; justify-content: space-between; align-items: center; }
+    .logo img { height: 220px; }
+    nav { display: flex; gap: 0.25rem; align-items: center; }
+    nav a { text-decoration: none; color: var(--gray-700); font-weight: 500; padding: 0.5rem 1rem; font-size: 0.95rem; }
+    nav a:hover { color: var(--primary); }
+    nav a.nav-cta { background-color: var(--secondary); color: var (--white); border-radius: 4px; margin-left: 0.5rem; }
+
+    .page-header { padding: 5rem 0 4rem; border-bottom: 1px solid var(--gray-300); }
+    .page-header h1 { font-size: 3rem; margin-bottom: 1rem; }
+    .page-label { text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; color: var(--primary); margin-bottom: 1rem; font-weight: 500; }
+    .page-header p { font-size: 1.2rem; color: var (--gray-500); max-width: 500px; }
+
+    .section { padding: 5rem 0; }
+
+    /* Contact Layout */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 4rem;
     }
 
-    header h1 {
-      margin: 0;
-      color: #fff;
+    .contact-info h2 {
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
     }
 
-    nav ul {
-      list-style: none;
-      display: flex;
+    .contact-info > p {
+      color: var(--gray-500);
+      margin-bottom: 2rem;
+    }
+
+    .info-item {
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--gray-300);
+      display: grid;
+      grid-template-columns: 50px 1fr;
       gap: 1rem;
-      margin: 0;
-      padding: 0;
+      align-items: start;
     }
 
-    nav a {
+    .info-item:first-of-type { border-top: 1px solid var(--gray-300); }
+
+    .info-icon {
+      width: 40px;
+      height: 40px;
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+    }
+
+    .info-content h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .info-content p, .info-content a {
+      color: var(--gray-700);
       text-decoration: none;
-      color: #fff;
-      font-weight: bold;
+      font-size: 0.95rem;
     }
 
-    main {
-      padding: 2rem;
-      text-align: center;
+    .info-content a:hover { color: var(--primary); }
+
+    /* Form */
+    .contact-form {
+      background: var(--white);
+      border: 1px solid var(--gray-300);
+      padding: 3rem;
     }
 
-    h2 {
-      color: #4a2e00;
+    .contact-form h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
     }
 
-    .contact-card {
-      background-color: #fff;
-      max-width: 500px;
-      margin: 2rem auto;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      text-align: left;
+    .contact-form > p {
+      color: var(--gray-500);
+      margin-bottom: 2rem;
     }
 
-    .contact-card p {
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
     }
 
-    .contact-card a {
-      color: #ff9f43;
-      text-decoration: none;
-      font-weight: bold;
+    .form-group { margin-bottom: 1.5rem; }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      color: var(--gray-900);
     }
 
-    form {
-      max-width: 500px;
-      margin: 2rem auto;
-      text-align: left;
-    }
-
-    form input, form textarea {
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
       width: 100%;
-      padding: 0.8rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      padding: 0.875rem 1rem;
+      border: 1px solid var(--gray-300);
+      font-family: inherit;
       font-size: 1rem;
+      transition: var(--transition);
+      background: var(--cream);
     }
 
-    form button {
-      background-color: #ff9f43;
-      color: white;
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 140px; }
+
+    .btn-submit {
+      background: var(--secondary);
+      color: var(--white);
+      padding: 1rem 2.5rem;
       border: none;
-      padding: 0.8rem 1.2rem;
+      font-family: inherit;
+      font-weight: 600;
       font-size: 1rem;
-      border-radius: 4px;
       cursor: pointer;
+      transition: var(--transition);
     }
 
-    footer {
-      background-color: #ffcc99;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
+    .btn-submit:hover { background: var(--gray-900); }
+
+    /* FAQ */
+    .section-alt { 
+      background: var(--white); 
+    }
+    .section-header { margin-bottom: 2.5rem; }
+    .section-label { text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; color: var(--primary); margin-bottom: 0.75rem; font-weight: 500; }
+    .section-header h2 { font-size: 2rem; }
+
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--gray-300);
+    }
+
+    .faq-item:first-child { border-top: 1px solid var(--gray-300); }
+
+    .faq-item h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--gray-900);
+    }
+
+    .faq-item p { color: var(--gray-700); margin: 0; }
+
+    /* Footer */
+    footer { background: var(--secondary); color: var(--white); padding: 4rem 0 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .footer-about p { color: rgba(255,255,255,0.6); font-size: 0.95rem; margin-top: 1rem; }
+    .footer-col h4 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.5rem; color: rgba(255,255,255,0.4); }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.75rem; }
+    .footer-col a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; }
+    .footer-col a:hover { color: var(--primary-light); }
+    .footer-bottom { padding-top: 2rem; text-align: center; color: rgba(255,255,255,0.4); font-size: 0.85rem; }
+
+    @media (max-width: 900px) {
+      .contact-layout { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      nav { display: none; }
+      .page-header h1 { font-size: 2.25rem; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>HEP C - Venier Project</h1>
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="partners.html">Partners</a></li>
-      <li><a href="resources.html">Resources</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-  </nav>
+  <div class="container">
+    <div class="logo"><img src="assets/imgs/test.png" alt="HCV Free - The Venier Project"></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="impact.html">Impact</a>
+      <a href="resources.html">Resources</a>
+      <a href="partners.html">Partners</a>
+      <a href="contact.html" class="nav-cta">Contact</a>
+    </nav>
+  </div>
 </header>
 
-<main>
-
-  <h2>Contact Us</h2>
-  <div class="contact-card">
-    <p><strong>Email:</strong> <a href="mailto:elisavenier@rogers.com">elisavenier@rogers.com</a></p>
-    <p><strong>Phone:</strong> +1 (800) 555-HEPC</p>
-    <p><strong>Location:</strong> Toronto, Ontario</p>
+<section class="page-header">
+  <div class="container">
+    <p class="page-label">Contact Us</p>
+    <h1>Get in touch</h1>
+    <p>Questions about testing, treatment, or partnerships? We're here to help.</p>
   </div>
+</section>
 
-  <form action="mailto:elisavenier@rogers.com" method="POST" enctype="text/plain">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required>
+<section class="section">
+  <div class="container">
+    <div class="contact-layout">
+      <div class="contact-info">
+        <h2>Reach out to us</h2>
+        <p>Whether you need information about HCV testing, want to schedule an appointment, or are interested in partnering with us.</p>
 
-    <label for="email">Your Email:</label>
-    <input type="email" id="email" name="email" required>
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-envelope"></i></div>
+          <div class="info-content">
+            <h4>Email</h4>
+            <a href="mailto:elisavenier@rogers.com">elisavenier@rogers.com</a>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-phone"></i></div>
+          <div class="info-content">
+            <h4>Phone</h4>
+            <a href="tel:+16476716076">(647) 671-6076</a>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="info-content">
+            <h4>Location</h4>
+            <p>Serving communities across Ontario, Canada</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-clock"></i></div>
+          <div class="info-content">
+            <h4>Hours</h4>
+            <p>Monday – Friday: 9:00 AM – 5:00 PM<br>Weekend appointments available</p>
+          </div>
+        </div>
+      </div>
 
-    <label for="message">Message:</label>
-    <textarea id="message" name="message" rows="5" required></textarea>
+      <div class="contact-form">
+        <h2>Send a message</h2>
+        <p>Fill out the form and we'll respond within 24–48 hours.</p>
 
-    <button type="submit">Send Message</button>
-  </form>
+        <form action="#" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name *</label>
+              <input type="text" id="firstName" name="firstName" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name *</label>
+              <input type="text" id="lastName" name="lastName" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inquiry">Type of Inquiry *</label>
+            <select id="inquiry" name="inquiry" required>
+              <option value="">Select an option</option>
+              <option value="testing">Testing Information</option>
+              <option value="appointment">Schedule Appointment</option>
+              <option value="treatment">Treatment Questions</option>
+              <option value="partnership">Partnership Inquiry</option>
+              <option value="provider">Healthcare Provider</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" placeholder="How can we help you?" required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <p>Interested in collaborating or volunteering? Get in touch today or fill out our referral form!</p>
-
-</main>
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header" style="text-align: center;">
+      <p class="section-label">FAQs</p>
+      <h2>Common questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <h4>Is testing confidential?</h4>
+        <p>Yes, all testing is completely confidential. Written informed consent is obtained, and your privacy is protected throughout.</p>
+      </div>
+      <div class="faq-item">
+        <h4>How long does testing take?</h4>
+        <p>Point-of-care antibody testing provides results in approximately 20 minutes. Confirmatory RNA testing may take additional time.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Is treatment covered by OHIP?</h4>
+        <p>Yes, Hepatitis C treatment is covered under Ontario's drug benefit programs. Our team can help navigate coverage options.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Do I need a referral?</h4>
+        <p>No referral is needed for testing. Our pharmacist-led model can initiate treatment directly, or connect you with a physician virtually.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <footer>
-  <p>&copy; 2025 HEP C - Venier Project. All rights reserved.</p>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <img src="assets/imgs/test.png" alt="HCV Free - The Venier Project" style="height: 140px;">
+        <p>Dedicated to eliminating Hepatitis C in Ontario through accessible testing, treatment, and education.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="partners.html">Partners</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="resources.html">All Resources</a></li>
+          <li><a href="#">Testing Locations</a></li>
+          <li><a href="#">For Providers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:elisavenier@rogers.com">elisavenier@rogers.com</a></li>
+          <li><a href="tel:+16476716076">(647) 671-6076</a></li>
+          <li>Ontario, Canada</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 HEP C Venier Project. All rights reserved.</p>
+    </div>
+  </div>
 </footer>
 
 </body>

@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Impact & Data | HEP C - Venier Project</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="See our impact across Ontario - interactive map of screening locations and real-time statistics.">
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  
+  <style>
+    :root {
+      --primary: #d35400;
+      --primary-light: #e67e22;
+      --secondary: #1a1a2e;
+      --accent: #16a085;
+      --cream: #faf8f5;
+      --white: #ffffff;
+      --gray-100: #f5f5f5;
+      --gray-300: #d1d1d1;
+      --gray-500: #888;
+      --gray-700: #444;
+      --gray-900: #1a1a1a;
+      --transition: all 0.2s ease;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background-color: var(--cream); color: var(--gray-900); line-height: 1.7; font-size: 17px; }
+    h1, h2, h3 { font-family: 'DM Serif Display', serif; font-weight: 400; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+
+    /* Header */
+    header { background-color: var(--cream); padding: 1.25rem 0; border-bottom: 1px solid var(--gray-300); }
+    header .container { display: flex; justify-content: space-between; align-items: center; }
+    .logo img { height: 220px; }
+    nav { display: flex; gap: 0.25rem; align-items: center; }
+    nav a { text-decoration: none; color: var(--gray-700); font-weight: 500; padding: 0.5rem 1rem; font-size: 0.95rem; transition: var(--transition); }
+    nav a:hover { color: var(--primary); }
+    nav a.nav-cta { background-color: var(--secondary); color: var(--white); border-radius: 4px; margin-left: 0.5rem; }
+
+    /* Page Header */
+    .page-header { padding: 5rem 0 4rem; border-bottom: none; }
+    .page-header h1 { font-size: 3rem; margin-bottom: 1rem; }
+    .page-label { text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; color: var(--primary); margin-bottom: 1rem; font-weight: 500; }
+    .page-header p { font-size: 1.2rem; color: var (--gray-500); max-width: 600px; }
+
+    /* Sections */
+    .section { padding: 5rem 0; }
+    .section-alt { background: var(--white); }
+    .section-dark { background: var(--secondary); color: var(--white); }
+    .section-header { margin-bottom: 3rem; }
+    .section-label { text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; color: var(--primary); margin-bottom: 0.75rem; font-weight: 500; }
+    .section-dark .section-label { color: var(--primary-light); }
+    .section-header h2 { font-size: 2.25rem; margin-bottom: 1rem; }
+    .section-header p { color: var(--gray-500); max-width: 550px; }
+    .section-dark .section-header p { color: rgba(255,255,255,0.7); }
+
+    /* Stats Dashboard */
+    .stats-dashboard {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .stat-card {
+      padding: 3rem 2rem;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+    }
+
+    .stat-card:last-child { border-right: none; }
+
+    .stat-icon {
+      width: 60px;
+      height: 60px;
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      display: flex; 
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      color: var(--primary);
+      font-size: 1.5rem;
+    }
+
+    .stat-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 3.5rem;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-number .counter { display: inline; }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .stat-sublabel {
+      font-size: 0.8rem;
+      color: var(--primary-light);
+      margin-top: 0.5rem;
+    }
+
+    /* Cascade of Care */
+    .cascade-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .cascade-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      margin-bottom: 2rem;
+    }
+
+    .cascade-step {
+      position: relative;
+    }
+
+    .cascade-fill {
+      height: 80px;
+      background: var(--primary);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cascade-step:nth-child(1) .cascade-fill { background: var(--secondary); }
+    .cascade-step:nth-child(2) .cascade-fill { background: #34495e; }
+    .cascade-step:nth-child(3) .cascade-fill { background: var(--primary); }
+    .cascade-step:nth-child(4) .cascade-fill { background: var(--accent); }
+
+    .cascade-percent {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: var(--white);
+    }
+
+    .cascade-info {
+      padding: 1.5rem 0;
+      text-align: center;
+    }
+
+    .cascade-info h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .cascade-info p {
+      color: var(--gray-500);
+      font-size: 0.9rem;
+    }
+
+    /* Map Section */
+    .map-container {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 0;
+      border: 1px solid var(--gray-300);
+      min-height: 600px;
+    }
+
+    .map-sidebar {
+      background: var(--white);
+      border-right: 1px solid var(--gray-300);
+      overflow-y: auto;
+      max-height: 600px;
+    }
+
+    .map-filters {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--gray-300);
+    }
+
+    .map-filters h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--gray-500);
+    }
+
+    .filter-group {
+      margin-bottom: 1rem;
+    }
+
+    .filter-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
+      cursor: pointer;
+      font-size: 0.95rem;
+      color: var(--gray-700);
+    }
+
+    .filter-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+    }
+
+    .location-list {
+      padding: 0;
+    }
+
+    .location-item {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--gray-300);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .location-item:hover {
+      background: var(--gray-100);
+    }
+
+    .location-item.active {
+      background: rgba(211, 84, 0, 0.1);
+      border-left: 3px solid var(--primary);
+    }
+
+    .location-type {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .location-name {
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      font-size: 0.95rem;
+    }
+
+    .location-address {
+      font-size: 0.85rem;
+      color: var(--gray-500);
+    }
+
+    #map {
+      width: 100%;
+      height: 600px;
+    }
+
+    /* Custom Leaflet Markers */
+    .custom-marker {
+      background: var(--primary);
+      border: 3px solid var(--white);
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .custom-marker.pharmacy {
+      background: var(--accent);
+    }
+
+    .custom-marker.clinic {
+      background: var(--primary);
+    }
+
+    .custom-marker.shelter {
+      background: var(--secondary);
+    }
+
+    .leaflet-popup-content-wrapper {
+      border-radius: 8px;
+      padding: 0;
+    }
+
+    .leaflet-popup-content {
+      margin: 0;
+      min-width: 200px;
+    }
+
+    .popup-content {
+      padding: 1rem;
+    }
+
+    .popup-type {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .popup-name {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .popup-address {
+      font-size: 0.85rem;
+      color: var(--gray-500);
+      margin-bottom: 0.75rem;
+    }
+
+    .popup-services {
+      font-size: 0.8rem;
+      color: var(--gray-700);
+    }
+
+    .popup-services span {
+      display: inline-block;
+      background: var(--gray-100);
+      padding: 0.25rem 0.5rem;
+      margin: 0.15rem;
+      border-radius: 4px;
+    }
+
+    /* Regional Stats */
+    .regional-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--gray-300);
+    }
+
+    .regional-item {
+      padding: 2rem;
+      border-right: 1px solid var(--gray-300);
+      border-bottom: 1px solid var(--gray-300);
+    }
+
+    .regional-item:nth-child(3n) { border-right: none; }
+    .regional-item:nth-last-child(-n+3) { border-bottom: none; }
+
+    .regional-name {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--gray-500);
+      margin-bottom: 0.5rem;
+    }
+
+    .regional-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.5rem;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .regional-label {
+      font-size: 0.9rem;
+      color: var (--gray-700);
+      margin-top: 0.25rem;
+    }
+
+    /* Timeline */
+    .timeline-chart {
+      background: var(--white);
+      border: 1px solid var(--gray-300);
+      padding: 2rem;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .chart-header h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--gray-500);
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .legend-dot.screened { background: var(--secondary); }
+    .legend-dot.positive { background: var(--primary); }
+    .legend-dot.treated { background: var(--accent); }
+
+    .chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 1rem;
+      height: 200px;
+      padding-top: 1rem;
+    }
+
+    .chart-month {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .bar-group {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 180px;
+    }
+
+    .bar {
+      width: 16px;
+      border-radius: 2px 2px 0 0;
+      transition: height 0.5s ease;
+    }
+
+    .bar.screened { background: var(--secondary); }
+    .bar.positive { background: var(--primary); }
+    .bar.treated { background: var(--accent); }
+
+    .month-label {
+      font-size: 0.75rem;
+      color: var(--gray-500);
+    }
+
+    /* Footer */
+    footer { background: var(--secondary); color: var(--white); padding: 4rem 0 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .footer-about p { color: rgba(255,255,255,0.6); font-size: 0.95rem; margin-top: 1rem; }
+    .footer-col h4 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.5rem; color: rgba(255,255,255,0.4); }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.75rem; }
+    .footer-col a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; }
+    .footer-col a:hover { color: var(--primary-light); }
+    .footer-bottom { padding-top: 2rem; text-align: center; color: rgba(255,255,255,0.4); font-size: 0.85rem; }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+      .stats-dashboard { grid-template-columns: repeat(2, 1fr); }
+      .stat-card:nth-child(2) { border-right: none; }
+      .stat-card:nth-child(1), .stat-card:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .map-container { grid-template-columns: 1fr; }
+      .map-sidebar { max-height: 300px; }
+      #map { height: 400px; }
+      .regional-grid { grid-template-columns: repeat(2, 1fr); }
+      .regional-item:nth-child(2n) { border-right: none; }
+      .cascade-bar { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      nav { display: none; }
+      .page-header h1 { font-size: 2.25rem; }
+      .stats-dashboard { grid-template-columns: 1fr; }
+      .stat-card { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .stat-card:last-child { border-bottom: none; }
+      .stat-number { font-size: 2.5rem; }
+      .regional-grid { grid-template-columns: 1fr; }
+      .regional-item { border-right: none !important; }
+      .cascade-bar { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="logo"><img src="assets/imgs/test.png" alt="HCV Free - The Venier Project"></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="impact.html">Impact</a>
+      <a href="resources.html">Resources</a>
+      <a href="partners.html">Partners</a>
+      <a href="contact.html" class="nav-cta">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-header">
+  <div class="container">
+    <p class="page-label">Impact & Data</p>
+    <h1>Our reach across Ontario</h1>
+    <p>Real-time statistics and interactive map showing our screening locations and cumulative impact.</p>
+  </div>
+</section>
+
+<!-- Live Statistics Dashboard -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-header" style="text-align: center; max-width: 600px; margin: 0 auto 3rem;">
+      <p class="section-label">Live Statistics</p>
+      <h2>Cumulative Impact</h2>
+      <p>Numbers updated in real-time as we work toward HCV elimination.</p>
+    </div>
+    <div class="stats-dashboard">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-users"></i></div>
+        <div class="stat-number"><span class="counter" data-target="4827">0</span></div>
+        <div class="stat-label">Patients Screened</div>
+        <div class="stat-sublabel">↑ 127 this month</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-vial"></i></div>
+        <div class="stat-number"><span class="counter" data-target="3654">0</span></div>
+        <div class="stat-label">Tests Completed</div>
+        <div class="stat-sublabel">↑ 98 this month</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-virus"></i></div>
+        <div class="stat-number"><span class="counter" data-target="412">0</span></div>
+        <div class="stat-label">Positive Cases</div>
+        <div class="stat-sublabel">8.5% positivity rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+        <div class="stat-number"><span class="counter" data-target="347">0</span></div>
+        <div class="stat-label">Patients Treated</div>
+        <div class="stat-sublabel">84% linkage to care</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cascade of Care -->
+<section class="section">
+  <div class="container">
+    <div class="section-header" style="text-align: center; max-width: 600px; margin: 0 auto 3rem;">
+      <p class="section-label">Cascade of Care</p>
+      <h2>From screening to cure</h2>
+    </div>
+    <div class="cascade-container">
+      <div class="cascade-bar">
+        <div class="cascade-step">
+          <div class="cascade-fill"><span class="cascade-percent">100%</span></div>
+          <div class="cascade-info">
+            <h4>Screened</h4>
+            <p>4,827 patients</p>
+          </div>
+        </div>
+        <div class="cascade-step">
+          <div class="cascade-fill"><span class="cascade-percent">76%</span></div>
+          <div class="cascade-info">
+            <h4>Tested</h4>
+            <p>3,654 patients</p>
+          </div>
+        </div>
+        <div class="cascade-step">
+          <div class="cascade-fill"><span class="cascade-percent">8.5%</span></div>
+          <div class="cascade-info">
+            <h4>Positive</h4>
+            <p>412 patients</p>
+          </div>
+        </div>
+        <div class="cascade-step">
+          <div class="cascade-fill"><span class="cascade-percent">84%</span></div>
+          <div class="cascade-info">
+            <h4>Treated</h4>
+            <p>347 patients</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Interactive Map -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Our Locations</p>
+      <h2>Screening sites across Ontario</h2>
+      <p>Find OAT pharmacies, clinics, and community partners where we provide HCV services.</p>
+    </div>
+    <div class="map-container">
+      <div class="map-sidebar">
+        <div class="map-filters">
+          <h4>Filter by Type</h4>
+          <div class="filter-group">
+            <label><input type="checkbox" checked data-filter="pharmacy"> OAT Pharmacies</label>
+            <label><input type="checkbox" checked data-filter="clinic"> Clinics</label>
+            <label><input type="checkbox" checked data-filter="shelter"> Shelters & Housing</label>
+          </div>
+        </div>
+        <div class="location-list" id="locationList">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+      <div id="map"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Monthly Trends -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Trends</p>
+      <h2>Monthly activity</h2>
+    </div>
+    <div class="timeline-chart">
+      <div class="chart-header">
+        <h4>2024–2025 Progress</h4>
+        <div class="chart-legend">
+          <div class="legend-item"><span class="legend-dot screened"></span> Screened</div>
+          <div class="legend-item"><span class="legend-dot positive"></span> Positive</div>
+          <div class="legend-item"><span class="legend-dot treated"></span> Treated</div>
+        </div>
+      </div>
+      <div class="chart-bars" id="chartBars">
+        <!-- Populated by JavaScript -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Regional Stats -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">By Region</p>
+      <h2>Regional breakdown</h2>
+    </div>
+    <div class="regional-grid">
+      <div class="regional-item">
+        <div class="regional-name">Toronto</div>
+        <div class="regional-number">2,341</div>
+        <div class="regional-label">patients screened</div>
+      </div>
+      <div class="regional-item">
+        <div class="regional-name">Peel Region</div>
+        <div class="regional-number">876</div>
+        <div class="regional-label">patients screened</div>
+      </div>
+      <div class="regional-item">
+        <div class="regional-name">York Region</div>
+        <div class="regional-number">543</div>
+        <div class="regional-label">patients screened</div>
+      </div>
+      <div class="regional-item">
+        <div class="regional-name">Hamilton</div>
+        <div class="regional-number">412</div>
+        <div class="regional-label">patients screened</div>
+      </div>
+      <div class="regional-item">
+        <div class="regional-name">Durham Region</div>
+        <div class="regional-number">328</div>
+        <div class="regional-label">patients screened</div>
+      </div>
+      <div class="regional-item">
+        <div class="regional-name">Other Regions</div>
+        <div class="regional-number">327</div>
+        <div class="regional-label">patients screened</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <img src="assets/imgs/test.png" alt="HCV Free - The Venier Project" style="height: 140px;">
+        <p>Dedicated to eliminating Hepatitis C in Ontario through accessible testing, treatment, and education.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="impact.html">Impact</a></li>
+          <li><a href="partners.html">Partners</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="resources.html">All Resources</a></li>
+          <li><a href="#">Testing Locations</a></li>
+          <li><a href="#">For Providers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:elisavenier@rogers.com">elisavenier@rogers.com</a></li>
+          <li><a href="tel:+16476716076">(647) 671-6076</a></li>
+          <li>Ontario, Canada</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 HEP C Venier Project. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+  // ========== LOCATION DATA ==========
+  const locations = [
+    // Toronto
+    { name: "Sherbourne Health Pharmacy", type: "pharmacy", lat: 43.6629, lng: -79.3716, address: "333 Sherbourne St, Toronto", services: ["OAT", "HCV Testing", "Treatment"] },
+    { name: "Parkdale Queen West CHC", type: "clinic", lat: 43.6426, lng: -79.4395, address: "1229 Queen St W, Toronto", services: ["HCV Testing", "Counselling"] },
+    { name: "Seaton House", type: "shelter", lat: 43.6594, lng: -79.3634, address: "339 George St, Toronto", services: ["HCV Screening", "Outreach"] },
+    { name: "Fred Victor Pharmacy", type: "pharmacy", lat: 43.6553, lng: -79.3759, address: "145 Queen St E, Toronto", services: ["OAT", "HCV Testing"] },
+    { name: "South Riverdale CHC", type: "clinic", lat: 43.6614, lng: -79.3419, address: "955 Queen St E, Toronto", services: ["HCV Testing", "Treatment", "Support"] },
+    { name: "Regent Park CHC", type: "clinic", lat: 43.6597, lng: -79.3619, address: "465 Dundas St E, Toronto", services: ["HCV Testing", "Counselling"] },
+    { name: "Dixon Hall Shelter", type: "shelter", lat: 43.6581, lng: -79.3582, address: "349 George St, Toronto", services: ["HCV Screening"] },
+    { name: "Moss Park Pharmacy", type: "pharmacy", lat: 43.6558, lng: -79.3662, address: "134 Dundas St E, Toronto", services: ["OAT", "HCV Testing", "Treatment"] },
+    
+    // Peel Region
+    { name: "Brampton Community Pharmacy", type: "pharmacy", lat: 43.6834, lng: -79.7603, address: "7700 Hurontario St, Brampton", services: ["OAT", "HCV Testing"] },
+    { name: "Mississauga CHC", type: "clinic", lat: 43.5890, lng: -79.6441, address: "2555 Dixie Rd, Mississauga", services: ["HCV Testing", "Counselling"] },
+    { name: "Peel OAT Clinic", type: "clinic", lat: 43.7315, lng: -79.7624, address: "44 Peel Centre Dr, Brampton", services: ["OAT", "HCV Testing", "Treatment"] },
+    
+    // York Region
+    { name: "Vaughan Community Pharmacy", type: "pharmacy", lat: 43.8361, lng: -79.4983, address: "3100 Rutherford Rd, Vaughan", services: ["OAT", "HCV Testing"] },
+    { name: "Markham Stouffville CHC", type: "clinic", lat: 43.8561, lng: -79.3370, address: "371 Main St N, Markham", services: ["HCV Testing", "Support"] },
+    
+    // Hamilton
+    { name: "Hamilton Urban Core CHC", type: "clinic", lat: 43.2557, lng: -79.8711, address: "71 Rebecca St, Hamilton", services: ["HCV Testing", "Treatment", "Harm Reduction"] },
+    { name: "Good Shepherd Centre", type: "shelter", lat: 43.2501, lng: -79.8657, address: "135 Mary St, Hamilton", services: ["HCV Screening", "Outreach"] },
+    { name: "Hamilton OAT Pharmacy", type: "pharmacy", lat: 43.2584, lng: -79.8690, address: "1 King St W, Hamilton", services: ["OAT", "HCV Testing"] },
+    
+    // Durham
+    { name: "Oshawa Community Health", type: "clinic", lat: 43.8971, lng: -78.8658, address: "115 Grassmere Ave, Oshawa", services: ["HCV Testing", "Counselling"] },
+    { name: "Durham OAT Pharmacy", type: "pharmacy", lat: 43.8942, lng: -78.8619, address: "419 King St W, Oshawa", services: ["OAT", "HCV Testing"] },
+    
+    // Ottawa
+    { name: "Sandy Hill CHC", type: "clinic", lat: 45.4231, lng: -75.6831, address: "221 Nelson St, Ottawa", services: ["HCV Testing", "Treatment"] },
+    { name: "Ottawa Mission", type: "shelter", lat: 45.4259, lng: -75.6899, address: "35 Waller St, Ottawa", services: ["HCV Screening", "Outreach"] },
+    
+    // London
+    { name: "London InterCommunity Health", type: "clinic", lat: 42.9849, lng: -81.2453, address: "659 Dundas St, London", services: ["HCV Testing", "Harm Reduction"] },
+  ];
+
+  // ========== MAP INITIALIZATION ==========
+  const map = L.map('map').setView([43.7, -79.4], 7);
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '© OpenStreetMap contributors © CARTO',
+    maxZoom: 19
+  }).addTo(map);
+
+  // Custom icon function
+  function createIcon(type) {
+    const colors = {
+      pharmacy: '#16a085',
+      clinic: '#d35400',
+      shelter: '#1a1a2e'
+    };
+    
+    return L.divIcon({
+      className: 'custom-div-icon',
+      html: `<div style="background: ${colors[type]}; width: 24px; height: 24px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 10px rgba(0,0,0,0.3);"></div>`,
+      iconSize: [24, 24],
+      iconAnchor: [12, 12]
+    });
+  }
+
+  // Add markers
+  const markers = {};
+  locations.forEach((loc, index) => {
+    const marker = L.marker([loc.lat, loc.lng], { icon: createIcon(loc.type) })
+      .bindPopup(`
+        <div class="popup-content">
+          <div class="popup-type">${loc.type}</div>
+          <div class="popup-name">${loc.name}</div>
+          <div class="popup-address">${loc.address}</div>
+          <div class="popup-services">${loc.services.map(s => `<span>${s}</span>`).join('')}</div>
+        </div>
+      `)
+      .addTo(map);
+    
+    markers[index] = { marker, type: loc.type };
+  });
+
+  // Populate location list
+  const locationList = document.getElementById('locationList');
+  locations.forEach((loc, index) => {
+    const item = document.createElement('div');
+    item.className = 'location-item';
+    item.dataset.index = index;
+    item.innerHTML = `
+      <div class="location-type">${loc.type}</div>
+      <div class="location-name">${loc.name}</div>
+      <div class="location-address">${loc.address}</div>
+    `;
+    item.addEventListener('click', () => {
+      map.setView([loc.lat, loc.lng], 14);
+      markers[index].marker.openPopup();
+      document.querySelectorAll('.location-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+    });
+    locationList.appendChild(item);
+  });
+
+  // Filter functionality
+  document.querySelectorAll('[data-filter]').forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+      const activeFilters = Array.from(document.querySelectorAll('[data-filter]:checked')).map(c => c.dataset.filter);
+      
+      Object.entries(markers).forEach(([index, { marker, type }]) => {
+        if (activeFilters.includes(type)) {
+          marker.addTo(map);
+          document.querySelector(`.location-item[data-index="${index}"]`).style.display = 'block';
+        } else {
+          map.removeLayer(marker);
+          document.querySelector(`.location-item[data-index="${index}"]`).style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // ========== COUNTER ANIMATION ==========
+  function animateCounters() {
+    const counters = document.querySelectorAll('.counter');
+    const speed = 200;
+
+    counters.forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      const increment = target / speed;
+
+      const updateCount = () => {
+        const count = +counter.innerText;
+        if (count < target) {
+          counter.innerText = Math.ceil(count + increment);
+          setTimeout(updateCount, 10);
+        } else {
+          counter.innerText = target.toLocaleString();
+        }
+      };
+
+      updateCount();
+    });
+  }
+
+  // Intersection Observer for counter animation
+  const statsSection = document.querySelector('.stats-dashboard');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounters();
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  observer.observe(statsSection);
+
+  // ========== MONTHLY CHART ==========
+  const monthlyData = [
+    { month: 'Jul', screened: 320, positive: 28, treated: 22 },
+    { month: 'Aug', screened: 385, positive: 34, treated: 27 },
+    { month: 'Sep', screened: 410, positive: 36, treated: 31 },
+    { month: 'Oct', screened: 445, positive: 38, treated: 33 },
+    { month: 'Nov', screened: 478, positive: 41, treated: 36 },
+    { month: 'Dec', screened: 390, positive: 32, treated: 28 },
+    { month: 'Jan', screened: 425, positive: 37, treated: 32 },
+    { month: 'Feb', screened: 510, positive: 44, treated: 38 },
+    { month: 'Mar', screened: 548, positive: 47, treated: 41 },
+    { month: 'Apr', screened: 492, positive: 42, treated: 37 },
+    { month: 'May', screened: 535, positive: 46, treated: 40 },
+    { month: 'Jun', screened: 489, positive: 42, treated: 36 },
+  ];
+
+  const chartBars = document.getElementById('chartBars');
+  const maxScreened = Math.max(...monthlyData.map(d => d.screened));
+
+  monthlyData.forEach(data => {
+    const monthDiv = document.createElement('div');
+    monthDiv.className = 'chart-month';
+    
+    const screenedHeight = (data.screened / maxScreened) * 160;
+    const positiveHeight = (data.positive / maxScreened) * 160;
+    const treatedHeight = (data.treated / maxScreened) * 160;
+
+    monthDiv.innerHTML = `
+      <div class="bar-group">
+        <div class="bar screened" style="height: ${screenedHeight}px;" title="Screened: ${data.screened}"></div>
+        <div class="bar positive" style="height: ${positiveHeight}px;" title="Positive: ${data.positive}"></div>
+        <div class="bar treated" style="height: ${treatedHeight}px;" title="Treated: ${data.treated}"></div>
+      </div>
+      <div class="month-label">${data.month}</div>
+    `;
+    chartBars.appendChild(monthDiv);
+  });
+</script>
+
+</body>
+</html>

@@ -4,128 +4,355 @@
   <meta charset="UTF-8">
   <title>Services | HEP C - Venier Project</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      margin: 0;
-      background-color: #fffaf5;
+    :root {
+      --primary: #d35400;
+      --primary-light: #e67e22;
+      --secondary: #1a1a2e;
+      --cream: #faf8f5;
+      --white: #ffffff;
+      --gray-300: #d1d1d1;
+      --gray-500: #888;
+      --gray-700: #444;
+      --gray-900: #1a1a1a;
+      --transition: all 0.2s ease;
     }
 
-    header {
-      background-color: #ff9f43;
-      padding: 1rem 2rem;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background-color: var(--cream); color: var(--gray-900); line-height: 1.7; font-size: 17px; }
+    h1, h2, h3 { font-family: 'DM Serif Display', serif; font-weight: 400; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+
+    /* Header */
+    header { background-color: var(--cream); padding: 1.25rem 0; border-bottom: 1px solid var(--gray-300); }
+    header .container { display: flex; justify-content: space-between; align-items: center; }
+    .logo img { height: 220px; }
+    nav { display: flex; gap: 0.25rem; align-items: center; }
+    nav a { text-decoration: none; color: var(--gray-700); font-weight: 500; padding: 0.5rem 1rem; font-size: 0.95rem; transition: var(--transition); }
+    nav a:hover { color: var(--primary); }
+    nav a.nav-cta { background-color: var (--secondary); color: var(--white); border-radius: 4px; margin-left: 0.5rem; }
+
+    /* Page Header */
+    .page-header { padding: 5rem 0 4rem; border-bottom: 1px solid var(--gray-300); }
+    .page-header h1 { font-size: 3rem; margin-bottom: 1rem; }
+    .page-label { text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; color: var(--primary); margin-bottom: 1rem; font-weight: 500; }
+    .page-header p { font-size: 1.2rem; color: var(--gray-500); max-width: 600px; }
+
+    /* Sections */
+    .section { padding: 5rem 0; }
+    .section-alt { background: var(--white); }
+    .section-header { margin-bottom: 3rem; }
+    .section-label { text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; color: var(--primary); margin-bottom: 0.75rem; font-weight: 500; }
+    .section-header h2 { font-size: 2.25rem; margin-bottom: 1rem; }
+    .section-header p { color: var(--gray-500); max-width: 550px; }
+
+    /* Services Grid - No Cards */
+    .services-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--gray-300);
+      border-left: 1px solid var(--gray-300);
+    }
+
+    .service-item {
+      padding: 2.5rem;
+      border-right: 1px solid var(--gray-300);
+      border-bottom: 1px solid var(--gray-300);
+    }
+
+    .service-icon {
+      width: 50px;
+      height: 50px;
+      border: 2px solid var(--primary);
+      border-radius: 50%;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
     }
 
-    header h1 {
-      margin: 0;
-      color: #fff;
-    }
+    .service-item h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+    .service-item p { color: var(--gray-700); margin-bottom: 1.5rem; }
 
-    nav ul {
-      list-style: none;
+    .service-features { list-style: none; }
+    .service-features li {
+      padding: 0.4rem 0;
+      color: var(--gray-500);
+      font-size: 0.9rem;
       display: flex;
-      gap: 1rem;
-      margin: 0;
-      padding: 0;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .service-features li::before {
+      content: "—";
+      color: var(--primary);
     }
 
-    nav a {
-      text-decoration: none;
-      color: #fff;
-      font-weight: bold;
+    /* POC Process */
+    .process-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
     }
 
-    main {
-      padding: 2rem;
+    .process-text h3 { font-size: 2rem; margin-bottom: 1.5rem; }
+    .process-text p { color: var(--gray-700); margin-bottom: 1rem; line-height: 1.9; }
+
+    .process-steps { border-left: 2px solid var(--gray-300); padding-left: 2rem; }
+
+    .process-step {
+      position: relative;
+      padding-bottom: 2rem;
     }
 
-    h2 {
-      text-align: center;
-      color: #4a2e00;
+    .process-step:last-child { padding-bottom: 0; }
+
+    .process-step::before {
+      content: "";
+      width: 12px;
+      height: 12px;
+      background: var(--primary);
+      border-radius: 50%;
+      position: absolute;
+      left: -2.35rem;
+      top: 0.35rem;
     }
 
-    .service-cards {
+    .process-step h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .process-step p { color: var(--gray-500); font-size: 0.95rem; margin: 0; }
+
+    /* Populations */
+    .populations-row {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-around;
-      gap: 1.5rem;
-      margin-top: 2rem;
+      gap: 1rem;
     }
 
-    .card {
-      background-color: #ffffff;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      max-width: 300px;
-      flex: 1 1 280px;
+    .population-tag {
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--gray-300);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      color: var (--gray-700);
     }
 
-    .card h3 {
-      color: #ff9f43;
-      margin-top: 0;
-    }
+    .population-tag i { color: var(--primary); }
 
-    footer {
-      background-color: #ffcc99;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
+    /* CTA */
+    .cta-banner { background: var(--primary); padding: 4rem 0; }
+    .cta-content { display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
+    .cta-text h2 { color: var(--white); font-size: 2rem; margin-bottom: 0.5rem; }
+    .cta-text p { color: rgba(255,255,255,0.85); }
+    .btn { padding: 1rem 2rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: var(--transition); }
+    .btn-dark { background: var(--secondary); color: var(--white); }
+    .btn-dark:hover { background: var(--gray-900); }
+
+    /* Footer */
+    footer { background: var(--secondary); color: var(--white); padding: 4rem 0 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .footer-about p { color: rgba(255,255,255,0.6); font-size: 0.95rem; margin-top: 1rem; }
+    .footer-col h4 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.5rem; color: rgba(255,255,255,0.4); }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.75rem; }
+    .footer-col a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; }
+    .footer-col a:hover { color: var(--primary-light); }
+    .footer-bottom { padding-top: 2rem; text-align: center; color: rgba(255,255,255,0.4); font-size: 0.85rem; }
+
+    @media (max-width: 900px) {
+      .services-list { grid-template-columns: 1fr; }
+      .process-grid { grid-template-columns: 1fr; }
+      .cta-content { flex-direction: column; text-align: center; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      nav { display: none; }
+      .page-header h1 { font-size: 2.25rem; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>HEP C - Venier Project</h1>
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="partners.html">Partners</a></li>
-      <li><a href="resources.html">Resources</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-  </nav>
+  <div class="container">
+    <div class="logo"><img src="assets/imgs/test.png" alt="HCV Free - The Venier Project"></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="impact.html">Impact</a>
+      <a href="resources.html">Resources</a>
+      <a href="partners.html">Partners</a>
+      <a href="contact.html" class="nav-cta">Contact</a>
+    </nav>
+  </div>
 </header>
 
-<main>
-  <h2>Our Services</h2>
-  <section class="service-cards">
-    <div class="card">
-      <h3> Point-of-Care Screening</h3>
-      <p>Fast, accessible Hep C testing via community events and pharmacy partners — results in minutes.</p>
+<section class="page-header">
+  <div class="container">
+    <p class="page-label">Our Services</p>
+    <h1>Comprehensive Hepatitis C care</h1>
+    <p>Screening, treatment, and support services designed to eliminate barriers to care for all communities.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="services-list">
+      <div class="service-item">
+        <div class="service-icon"><i class="fas fa-vial"></i></div>
+        <h3>Point-of-Care Testing</h3>
+        <p>Rapid, confidential HCV antibody testing with results in under 20 minutes.</p>
+        <ul class="service-features">
+          <li>Results in 20 minutes</li>
+          <li>Confidential & respectful</li>
+          <li>Pre & post-test counselling</li>
+          <li>Written informed consent</li>
+          <li>On-site follow-up testing</li>
+        </ul>
+      </div>
+      <div class="service-item">
+        <div class="service-icon"><i class="fas fa-pills"></i></div>
+        <h3>Treatment Pathways</h3>
+        <p>Pharmacist-led treatment and virtual physician consultations for curative therapy.</p>
+        <ul class="service-features">
+          <li>Virtual MD consultations</li>
+          <li>Pharmacist prescribing</li>
+          <li>DAA therapy coordination</li>
+          <li>Treatment monitoring</li>
+          <li>Cure confirmation testing</li>
+        </ul>
+      </div>
+      <div class="service-item">
+        <div class="service-icon"><i class="fas fa-hands-helping"></i></div>
+        <h3>Support Services</h3>
+        <p>Comprehensive support throughout the entire HCV continuum of care.</p>
+        <ul class="service-features">
+          <li>Care navigation</li>
+          <li>Harm reduction supplies</li>
+          <li>Linkage to social services</li>
+          <li>Peer support programs</li>
+          <li>Long-term follow-up</li>
+        </ul>
+      </div>
     </div>
-    <div class="card">
-      <h3> Treatment Linkage</h3>
-      <p>We work directly with pharmacists to ensure seamless access to antiviral medications.</p>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="process-grid">
+      <div class="process-text">
+        <p class="section-label">Testing Process</p>
+        <h3>Quick, confidential & effective</h3>
+        <p>Point-of-Care serological assays detect HCV antibodies. Testing is provided to all high-risk patients and helps normalize the experience.</p>
+        <p>Written informed consent is obtained to ensure testing respects individual rights to confidentiality, with comprehensive pre- and post-test counselling provided.</p>
+        <p>Any patient testing positive is provided counselling and additional on-site testing to determine active viral load requiring treatment.</p>
+      </div>
+      <div class="process-steps">
+        <div class="process-step">
+          <h4>1. Informed Consent</h4>
+          <p>Written consent with full explanation of the process and your rights.</p>
+        </div>
+        <div class="process-step">
+          <h4>2. Finger Prick Test</h4>
+          <p>Quick antibody test using a small blood sample from your finger.</p>
+        </div>
+        <div class="process-step">
+          <h4>3. Results & Counselling</h4>
+          <p>Receive results in 20 minutes with supportive post-test counselling.</p>
+        </div>
+        <div class="process-step">
+          <h4>4. Confirmatory Testing</h4>
+          <p>If positive, RNA testing confirms active infection on-site.</p>
+        </div>
+        <div class="process-step">
+          <h4>5. Linkage to Care</h4>
+          <p>Immediate connection to treatment through virtual physician consultation.</p>
+        </div>
+      </div>
     </div>
-    <div class="card">
-      <h3> Education & Awareness</h3>
-      <p>Community outreach and peer-led education tailored to vulnerable and at-risk groups.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Who We Serve</p>
+      <h2>Priority populations facing the greatest barriers</h2>
     </div>
-    <div class="card">
-      <h3> Open Research Access</h3>
-      <p>Sharing anonymized data and study results to inform better Hep C health equity solutions.</p>
+    <div class="populations-row">
+      <div class="population-tag"><i class="fas fa-home"></i> People Experiencing Homelessness</div>
+      <div class="population-tag"><i class="fas fa-syringe"></i> People Who Use Drugs</div>
+      <div class="population-tag"><i class="fas fa-feather-alt"></i> Indigenous Communities</div>
+      <div class="population-tag"><i class="fas fa-rainbow"></i> 2SLGBTQ+ Individuals</div>
+      <div class="population-tag"><i class="fas fa-tree"></i> Rural & Remote Communities</div>
+      <div class="population-tag"><i class="fas fa-user-friends"></i> Baby Boomers (1945–1975)</div>
     </div>
-    <div class="card">
-      <h3> Referral & Booking</h3>
-      <p>Support for clinics, shelters, and care networks to refer patients to partner providers quickly.</p>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <div class="container">
+    <div class="cta-content">
+      <div class="cta-text">
+        <h2>Ready to get tested?</h2>
+        <p>Take the first step towards a Hep C-free life. We're here to support you.</p>
+      </div>
+      <a href="contact.html" class="btn btn-dark">Book an Appointment</a>
     </div>
-    <div class="card">
-      <h3>Testing Locator Maps</h3>
-      <p>Interactive visual tools to help patients find the nearest participating pharmacies and clinics.</p>
-    </div>
-  </section>
-</main>
+  </div>
+</section>
 
 <footer>
-  <p>&copy; 2025 HEP C - Venier Project. All rights reserved.</p>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <img src="assets/imgs/test.png" alt="HCV Free - The Venier Project" style="height: 140px;">
+        <p>Dedicated to eliminating Hepatitis C in Ontario through accessible testing, treatment, and education.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="partners.html">Partners</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="resources.html">All Resources</a></li>
+          <li><a href="#">Testing Locations</a></li>
+          <li><a href="#">For Providers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:elisavenier@rogers.com">elisavenier@rogers.com</a></li>
+          <li><a href="tel:+16476716076">(647) 671-6076</a></li>
+          <li>Ontario, Canada</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 HEP C Venier Project. All rights reserved.</p>
+    </div>
+  </div>
 </footer>
 
 </body>

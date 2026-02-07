@@ -1,153 +1,772 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Resources | HEP C - Venier Project</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Educational resources, materials, and information about Hepatitis C for patients and healthcare providers.">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      margin: 0;
-      background-color: #fffaf5;
+    :root {
+      --primary: #d35400;
+      --primary-light: #e67e22;
+      --secondary: #1a1a2e;
+      --accent: #16a085;
+      --cream: #faf8f5;
+      --white: #ffffff;
+      --gray-100: #f5f5f5;
+      --gray-300: #d1d1d1;
+      --gray-500: #888;
+      --gray-700: #444;
+      --gray-900: #1a1a1a;
+      --transition: all 0.2s ease;
     }
 
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      background-color: var(--cream);
+      color: var(--gray-900);
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    h1, h2, h3 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-weight: 400;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Header */
     header {
-      background-color: #ff9f43;
-      padding: 1rem 2rem;
+      background-color: var(--cream);
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--gray-300);
+    }
+
+    header .container {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    header h1 {
-      margin: 0;
-      color: #fff;
-    }
+    .logo img { height: 220px; }
 
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 1rem;
-      margin: 0;
-      padding: 0;
-    }
+    nav { display: flex; gap: 0.25rem; align-items: center; }
 
     nav a {
       text-decoration: none;
-      color: #fff;
-      font-weight: bold;
+      color: var(--gray-700);
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
+      transition: var(--transition);
     }
 
-    main {
-      padding: 2rem;
+    nav a:hover { color: var(--primary); }
+
+    nav a.nav-cta {
+      background-color: var(--secondary);
+      color: var(--white);
+      border-radius: 4px;
+      margin-left: 0.5rem;
     }
 
-    h2 {
-      text-align: center;
-      color: #4a2e00;
+    nav a.nav-cta:hover { background-color: var(--gray-700); }
+
+    /* Hero */
+    .hero {
+      padding: 6rem 0;
+      background: var(--secondary);
+      color: var(--white);
     }
 
-    .resource-list {
-      max-width: 700px;
-      margin: 2rem auto;
-      background-color: #fff;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    .hero-content {
+      max-width: 750px;
     }
 
-    .resource-list ul {
-      padding-left: 1.2rem;
+    .hero-label {
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      color: var(--primary-light);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
     }
 
-    .info-bits {
+    .hero h1 {
+      font-size: 3.5rem;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: rgba(255,255,255,0.8);
+      max-width: 600px;
+    }
+
+    /* Sections */
+    .section {
+      padding: 5rem 0;
+    }
+
+    .section-header {
+      margin-bottom: 3rem;
+    }
+
+    .section-label {
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      color: var(--gray-500);
+      font-size: 1.1rem;
+      max-width: 550px;
+    }
+
+    .section-alt { background: var(--white); }
+
+    /* Resource Tabs */
+    .resource-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .resource-tab {
+      padding: 0.6rem 1.25rem;
+      background: transparent;
+      border: 1px solid var(--gray-300);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--gray-700);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .resource-tab:hover, .resource-tab.active {
+      background: var(--secondary);
+      border-color: var(--secondary);
+      color: var(--white);
+    }
+
+    /* Resource Cards */
+    .resources-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+
+    .resource-card {
+      padding-top: 1.5rem;
+      border-top: 2px solid var(--secondary);
+    }
+
+    .resource-card-icon {
+      width: 40px;
+      height: 40px;
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .resource-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .resource-card p {
+      color: var (--gray-700);
+      line-height: 1.8;
+      margin-bottom: 1.25rem;
+    }
+
+    .resource-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.95rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid var(--primary);
+      transition: var(--transition);
+    }
+
+    .resource-link:hover { border-color: var(--secondary); color: var(--secondary); }
+
+    /* Downloads List */
+    .downloads-list {
+      border: 1px solid var(--gray-300);
+    }
+
+    .download-item {
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--gray-300);
+    }
+
+    .download-item:last-child { border-bottom: none; }
+
+    .download-info {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .download-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--cream);
+      border: 1px solid var(--gray-300);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .download-icon i { font-size: 1.25rem; color: var(--primary); }
+
+    .download-text h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 0.25rem;
+    }
+    .download-text p { color: var(--gray-500); font-size: 0.9rem; margin: 0; }
+
+    .download-btn {
+      padding: 0.75rem 1.5rem;
+      background: var(--secondary);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: var(--transition);
+    }
+
+    .download-btn:hover { background: var(--gray-700); }
+
+    /* External Links */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      border: 1px solid var(--gray-300);
+    }
+
+    .link-card {
+      padding: 2rem;
+      display: flex;
+      align-items: flex-start;
       gap: 1.5rem;
-      margin: 3rem 0;
-      max-width: 1000px;
-      margin-left: auto;
-      margin-right: auto;
+      text-decoration: none;
+      color: inherit;
+      border-bottom: 1px solid var(--gray-300);
+      border-right: 1px solid var(--gray-300);
+      transition: var(--transition);
     }
 
-    .bit {
-      background-color: #fff8ec;
-      padding: 1.5rem;
-      border-left: 6px solid #ff9f43;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    .link-card:nth-child(2n) { border-right: none; }
+    .link-card:nth-last-child(-n+2) { border-bottom: none; }
+
+    .link-card:hover { background: var(--gray-100); }
+
+    .link-card i {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-top: 0.25rem;
     }
 
-    .bit h3 {
-      margin-top: 0;
-      color: #ff9f43;
+    .link-card h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 0.5rem;
+    }
+    .link-card p { color: var(--gray-700); margin: 0; font-size: 0.95rem; }
+
+    /* FAQ */
+    .faq-list {
+      border: 1px solid var(--gray-300);
     }
 
+    .faq-item {
+      border-bottom: 1px solid var(--gray-300);
+    }
+
+    .faq-item:last-child { border-bottom: none; }
+
+    .faq-question {
+      padding: 1.5rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      color: var(--gray-900);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .faq-question i { color: var(--primary); }
+
+    .faq-answer {
+      padding: 0 2rem 1.5rem;
+      color: var(--gray-700);
+      line-height: 1.8;
+    }
+
+    /* CTA Banner */
+    .cta-banner {
+      background: var(--primary);
+      padding: 4rem 0;
+    }
+
+    .cta-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .cta-text h2 {
+      color: var(--white);
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-text p {
+      color: rgba(255,255,255,0.85);
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-dark {
+      background: var(--secondary);
+      color: var(--white);
+    }
+
+    .btn-dark:hover { background: var(--gray-900); }
+
+    .btn-outline-light {
+      border: 2px solid var(--white);
+      color: var(--white);
+      background: transparent;
+    }
+
+    .btn-outline-light:hover {
+      background: var(--white);
+      color: var(--primary);
+    }
+
+    /* Footer */
     footer {
-      background-color: #ffcc99;
+      background: var(--secondary);
+      color: var(--white);
+      padding: 4rem 0 2rem;
+      margin-top: 0;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .footer-about p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+    }
+
+    .footer-col h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 1.5rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .footer-col ul { list-style: none; }
+
+    .footer-col li { margin-bottom: 0.75rem; }
+
+    .footer-col a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .footer-col a:hover { color: var(--primary-light); }
+
+    .footer-bottom {
+      padding-top: 2rem;
       text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .resources-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .links-grid { grid-template-columns: 1fr; }
+      .link-card { border-right: none !important; }
+      .cta-content { flex-direction: column; text-align: center; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      nav { display: none; }
+      .hero h1 { font-size: 2.5rem; }
+      .download-item { flex-direction: column; align-items: flex-start; gap: 1rem; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>HEP C - Venier Project</h1>
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="partners.html">Partners</a></li>
-      <li><a href="resources.html">Resources</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-  </nav>
+  <div class="container">
+    <div class="logo">
+      <img src="assets/imgs/test.png" alt="HCV Free - The Venier Project">
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="impact.html">Impact</a>
+      <a href="resources.html">Resources</a>
+      <a href="partners.html">Partners</a>
+      <a href="contact.html" class="nav-cta">Contact</a>
+    </nav>
+  </div>
 </header>
 
-<main>
-  <h2>Educational Resources</h2>
-  <div class="resource-list">
-    <p>Download educational materials, research reports, and guides for patients and providers:</p>
-    <ul>
-      <li><a href="#">Educational Brochure (PDF)</a></li>
-      <li><a href="#">Research Summary 2025 (PDF)</a></li>
-      <li><a href="#">Treatment Journey Guide (PDF)</a></li>
-      <li><a href="#">Provider Toolkit (PDF)</a></li>
-    </ul>
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <p class="hero-label">Knowledge & Support</p>
+      <h1>Resources</h1>
+      <p>Educational materials, guides, and information to support HCV awareness, prevention, and treatment.</p>
+    </div>
   </div>
+</section>
 
-  <h2 style="text-align:center; color:#4a2e00;">Hep C Facts & Figures</h2>
-  <div class="info-bits">
-    <div class="bit">
-      <h3> One-Time Exposure</h3>
-      <p>Hepatitis C is transmitted through blood-to-blood contact. One exposure can lead to lifelong infection if untreated.</p>
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Educational Materials</p>
+      <h2>Comprehensive information for everyone</h2>
+      <p>Resources for patients, caregivers, and healthcare providers.</p>
     </div>
-    <div class="bit">
-      <h3> Most Don't Know</h3>
-      <p>Up to 44% of people living with Hep C are unaware they have it. Early detection is key to stopping its spread.</p>
+
+    <div class="resource-tabs">
+      <span class="resource-tab active">All Resources</span>
+      <span class="resource-tab">For Patients</span>
+      <span class="resource-tab">For Providers</span>
+      <span class="resource-tab">Community</span>
     </div>
-    <div class="bit">
-      <h3> Simple Cure</h3>
-      <p>Modern treatments are over 95% effective and involve taking oral medication for 8 to 12 weeks — no injections needed.</p>
-    </div>
-    <div class="bit">
-      <h3> Disproportionate Impact</h3>
-      <p>Indigenous people, 2SLGBTQ+ individuals, people who use drugs, and people in prison are at higher risk.</p>
-    </div>
-    <div class="bit">
-      <h3> Rapid Tests</h3>
-      <p>We use point-of-care tests that give accurate results in under 20 minutes — even in remote or rural communities.</p>
+
+    <div class="resources-grid">
+      <div class="resource-card">
+        <div class="resource-card-icon"><i class="fas fa-book-medical"></i></div>
+        <h3>Understanding Hepatitis C</h3>
+        <p>A comprehensive guide explaining what Hepatitis C is, how it spreads, symptoms, and why early detection matters.</p>
+        <a href="#" class="resource-link">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="resource-card">
+        <div class="resource-card-icon"><i class="fas fa-vial"></i></div>
+        <h3>Testing Information</h3>
+        <p>Everything you need to know about HCV testing, including antibody tests, RNA tests, and what your results mean.</p>
+        <a href="#" class="resource-link">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="resource-card">
+        <div class="resource-card-icon"><i class="fas fa-pills"></i></div>
+        <h3>Treatment Guide</h3>
+        <p>Information about DAA therapy, treatment duration, what to expect, and achieving sustained virologic response.</p>
+        <a href="#" class="resource-link">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="resource-card">
+        <div class="resource-card-icon"><i class="fas fa-shield-alt"></i></div>
+        <h3>Prevention & Harm Reduction</h3>
+        <p>Strategies to prevent HCV transmission, harm reduction practices, and protecting yourself and others.</p>
+        <a href="#" class="resource-link">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="resource-card">
+        <div class="resource-card-icon"><i class="fas fa-user-md"></i></div>
+        <h3>For Healthcare Providers</h3>
+        <p>Clinical guidelines, screening protocols, treatment algorithms, and resources for healthcare professionals.</p>
+        <a href="#" class="resource-link">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="resource-card">
+        <div class="resource-card-icon"><i class="fas fa-heart"></i></div>
+        <h3>Living with Hep C</h3>
+        <p>Support resources, lifestyle guidance, mental health support, and connecting with peer networks.</p>
+        <a href="#" class="resource-link">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
     </div>
   </div>
-</main>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Downloads</p>
+      <h2>Downloadable Materials</h2>
+      <p>Print-ready resources for distribution in your community or clinic.</p>
+    </div>
+    <div class="downloads-list">
+      <div class="download-item">
+        <div class="download-info">
+          <div class="download-icon"><i class="fas fa-file-pdf"></i></div>
+          <div class="download-text">
+            <h4>HCV Patient Information Brochure</h4>
+            <p>PDF • 2 pages • English</p>
+          </div>
+        </div>
+        <a href="#" class="download-btn"><i class="fas fa-download"></i> Download</a>
+      </div>
+      <div class="download-item">
+        <div class="download-info">
+          <div class="download-icon"><i class="fas fa-file-pdf"></i></div>
+          <div class="download-text">
+            <h4>Testing Information Sheet</h4>
+            <p>PDF • 1 page • English, French</p>
+          </div>
+        </div>
+        <a href="#" class="download-btn"><i class="fas fa-download"></i> Download</a>
+      </div>
+      <div class="download-item">
+        <div class="download-info">
+          <div class="download-icon"><i class="fas fa-file-pdf"></i></div>
+          <div class="download-text">
+            <h4>Treatment Journey Guide</h4>
+            <p>PDF • 4 pages • English</p>
+          </div>
+        </div>
+        <a href="#" class="download-btn"><i class="fas fa-download"></i> Download</a>
+      </div>
+      <div class="download-item">
+        <div class="download-info">
+          <div class="download-icon"><i class="fas fa-file-pdf"></i></div>
+          <div class="download-text">
+            <h4>Provider Clinical Guidelines</h4>
+            <p>PDF • 12 pages • English</p>
+          </div>
+        </div>
+        <a href="#" class="download-btn"><i class="fas fa-download"></i> Download</a>
+      </div>
+      <div class="download-item">
+        <div class="download-info">
+          <div class="download-icon"><i class="fas fa-file-image"></i></div>
+          <div class="download-text">
+            <h4>Awareness Poster Set</h4>
+            <p>ZIP • 5 posters • Print-ready</p>
+          </div>
+        </div>
+        <a href="#" class="download-btn"><i class="fas fa-download"></i> Download</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">External Links</p>
+      <h2>Trusted Resources</h2>
+      <p>Additional information from trusted organizations.</p>
+    </div>
+    <div class="links-grid">
+      <a href="https://www.who.int/health-topics/hepatitis" target="_blank" class="link-card">
+        <i class="fas fa-globe"></i>
+        <div>
+          <h4>World Health Organization</h4>
+          <p>Global hepatitis elimination strategy and international guidelines.</p>
+        </div>
+      </a>
+      <a href="https://www.canada.ca/en/public-health/services/diseases/hepatitis-c.html" target="_blank" class="link-card">
+        <i class="fas fa-leaf"></i>
+        <div>
+          <h4>Public Health Agency of Canada</h4>
+          <p>Canadian guidelines, surveillance data, and national strategies.</p>
+        </div>
+      </a>
+      <a href="https://www.catie.ca/hepatitis-c" target="_blank" class="link-card">
+        <i class="fas fa-info-circle"></i>
+        <div>
+          <h4>CATIE</h4>
+          <p>Canada's source for HIV and hepatitis C information.</p>
+        </div>
+      </a>
+      <a href="#" class="link-card">
+        <i class="fas fa-hands-helping"></i>
+        <div>
+          <h4>Ontario Harm Reduction Network</h4>
+          <p>Harm reduction resources and service locations across Ontario.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">FAQs</p>
+      <h2>Frequently Asked Questions</h2>
+      <p>Answers to common questions about Hepatitis C.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Can Hepatitis C be cured?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Yes! Modern direct-acting antiviral (DAA) treatments cure over 95% of Hepatitis C cases. Treatment typically involves taking pills once daily for 8-12 weeks, with minimal side effects.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>How is Hepatitis C transmitted?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Hepatitis C is transmitted through blood-to-blood contact. The most common routes include sharing needles or drug equipment, unsterile tattoo or piercing practices, and needlestick injuries.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Who should get tested for Hepatitis C?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Testing is recommended for anyone who has ever injected drugs, received a blood transfusion before 1992, has HIV, was born to a mother with HCV, or was born between 1945-1975.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Is Hepatitis C treatment covered in Ontario?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, Hepatitis C treatment is covered under Ontario Drug Benefit (ODB) for eligible individuals. Our team can help navigate coverage options.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Can I get Hepatitis C again after being cured?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, being cured does not provide immunity. You can be re-infected if exposed to the virus again. Harm reduction practices remain important after treatment.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <div class="container">
+    <div class="cta-content">
+      <div class="cta-text">
+        <h2>Need More Information?</h2>
+        <p>Our team is here to answer your questions and provide support.</p>
+      </div>
+      <div class="cta-buttons">
+        <a href="contact.html" class="btn btn-dark">Get in Touch</a>
+        <a href="services.html" class="btn btn-outline-light">Find Testing</a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <footer>
-  <p>&copy; 2025 HEP C - Venier Project. All rights reserved.</p>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <img src="assets/imgs/test.png" alt="HCV Free - The Venier Project" style="height: 140px;">
+        <p>Dedicated to eliminating Hepatitis C in Ontario through accessible testing, treatment, and education for underserved communities.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="partners.html">Partners</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="resources.html">All Resources</a></li>
+          <li><a href="#">Testing Locations</a></li>
+          <li><a href="#">For Providers</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:elisavenier@rogers.com">elisavenier@rogers.com</a></li>
+          <li><a href="tel:+16476716076">(647) 671-6076</a></li>
+          <li>Ontario, Canada</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 HEP C Venier Project. All rights reserved.</p>
+    </div>
+  </div>
 </footer>
 
 </body>
